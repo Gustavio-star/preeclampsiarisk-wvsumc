@@ -83,11 +83,11 @@ The scoring engine incorporates **12 clinical and laboratory predictors**, each 
 ├─────────────────────────────┼──────────────────┼──────────────────┼──────────────┤
 │ Mean Arterial Pressure      │ < 90 mmHg        │ ≥ 105 mmHg       │ HIGH   ●●●   │
 │ UPCR                        │ < 0.15           │ ≥ 0.30           │ HIGH   ●●●   │
-│ Platelet Count              │ 150–400 ×10³/µL  │ < 100 ×10³/µL   │ HIGH   ●●●   │
-│ Serum Creatinine            │ 0.5–0.9 mg/dL    │ ≥ 1.1 mg/dL     │ MOD    ●●    │
-│ AST / ALT                   │ < 40 U/L         │ ≥ 70 U/L        │ MOD    ●●    │
-│ Uric Acid                   │ < 5.5 mg/dL      │ ≥ 6.0 mg/dL     │ MOD    ●●    │
-│ BMI (pre-pregnancy)         │ 18.5–24.9 kg/m²  │ ≥ 35 kg/m²      │ LOW    ●     │
+│ Platelet Count              │ 150–400 ×10³/µL  │ < 100 ×10³/µL    │ HIGH   ●●●   │
+│ Serum Creatinine            │ 0.5–0.9 mg/dL    │ ≥ 1.1 mg/dL      │ MOD    ●●    │
+│ AST / ALT                   │ < 40 U/L         │ ≥ 70 U/L         │ MOD    ●●    │
+│ Uric Acid                   │ < 5.5 mg/dL      │ ≥ 6.0 mg/dL      │ MOD    ●●    │
+│ BMI (pre-pregnancy)         │ 18.5–24.9 kg/m²  │ ≥ 35 kg/m²       │  LOW    ●    │
 │ Gestational Age             │ ≥ 37 weeks       │ < 34 weeks       │ MOD–HI ●●    │
 │ Prior PE / HTN / DM / APS   │ Absent           │ Present          │ MOD–HI ●●    │
 │ Multiple Pregnancy          │ Singleton        │ Twins / Higher   │ MOD    ●●    │
