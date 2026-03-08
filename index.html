@@ -511,6 +511,25 @@ input[type=number]::placeholder{color:rgba(255,255,255,.18);}
 .sig-mono{font-size:12.5px;font-weight:800;letter-spacing:.18em;background:linear-gradient(135deg,rgba(255,255,255,.7),rgba(255,255,255,.3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;user-select:none;}
 .sig-role{font-size:10.5px;font-weight:500;letter-spacing:.05em;color:rgba(255,255,255,.25);user-select:none;}
 .sig-year{font-size:10.5px;font-weight:500;color:rgba(255,255,255,.16);user-select:none;}
+.sig-link{
+  text-decoration:none;
+  cursor:pointer;
+  transition:background .22s,border-color .22s,transform .15s,box-shadow .22s;
+}
+.sig-link:hover{
+  background:rgba(255,255,255,.08);
+  border-color:rgba(255,255,255,.14);
+  transform:translateY(-1px);
+  box-shadow:0 4px 20px rgba(0,0,0,.3);
+}
+.sig-link:active{transform:scale(.97);}
+.sig-email{
+  font-size:10.5px;font-weight:600;
+  color:rgba(90,200,250,.55);
+  letter-spacing:.01em;
+  transition:color .2s;
+}
+.sig-link:hover .sig-email{color:#5ac8fa;}
 
 
 /* ══ PATIENT LOG ══ */
@@ -610,16 +629,16 @@ input[type=number]::placeholder{color:rgba(255,255,255,.18);}
   .ph-docinfo{text-align:right;flex-shrink:0;margin-left:20px;}
   .ph-doctype{font-size:8px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);padding:5px 13px;border-radius:4px;display:block;margin-bottom:8px;white-space:nowrap;}
   .ph-docid{font-size:7px;color:rgba(255,255,255,.35);text-align:right;font-weight:600;}
-  /* Meta strip inside band */
+  /* Meta strip — white background, fully readable */
   .ph-metastrip{
     display:grid;grid-template-columns:repeat(4,1fr);
-    border-top:1px solid rgba(255,255,255,.12);
-    padding:0;
+    background:#ffffff;
+    border-bottom:2px solid #e0e8f2;
   }
-  .ph-mf{padding:10px 14px;border-right:1px solid rgba(255,255,255,.08);}
+  .ph-mf{padding:12px 16px;border-right:1px solid #e0e8f2;}
   .ph-mf:last-child{border-right:none;}
-  .ph-mk{font-size:6.5px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:3px;}
-  .ph-mv{font-size:11.5px;font-weight:700;color:#fff;}
+  .ph-mk{font-size:7px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7a92ad;margin-bottom:4px;}
+  .ph-mv{font-size:12px;font-weight:800;color:#07142b;}
 
   /* ── COLOUR STRIPE ── */
   .ph-stripe{height:3px;background:linear-gradient(90deg,#07142b 0%,#1846d0 25%,#0ea5e9 55%,#0d9488 80%,#059669 100%);}
@@ -743,108 +762,32 @@ input[type=number]::placeholder{color:rgba(255,255,255,.18);}
   .ph-foot-r{text-align:right;font-size:7px;color:rgba(255,255,255,.35);font-weight:600;letter-spacing:.05em;}
 }
 
-  /* HEADER */
-  .ph-head{display:flex;align-items:stretch;justify-content:space-between;background:linear-gradient(130deg,#091c38 0%,#0c2550 55%,#082d5a 100%);padding:18px 26px;border-bottom:4px solid #1846c8;}
-  .ph-hosp-col{display:flex;flex-direction:column;justify-content:center;}
-  .ph-hosp{font-size:17px;font-weight:900;color:#fff;margin-bottom:4px;letter-spacing:-.01em;}
-  .ph-dept{font-size:8.5px;color:rgba(255,255,255,.58);font-weight:700;letter-spacing:.09em;text-transform:uppercase;}
-  .ph-badge-col{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;}
-  .ph-badge{font-size:8px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;background:rgba(255,255,255,.14);color:#fff;padding:5px 13px;border:1px solid rgba(255,255,255,.26);border-radius:5px;white-space:nowrap;}
-  .ph-logo-txt{font-size:8.5px;color:rgba(255,255,255,.32);margin-top:auto;text-align:right;font-weight:600;letter-spacing:.06em;}
-
-  /* STRIPE */
-  .ph-stripe{height:4px;background:linear-gradient(90deg,#091c38 0%,#1846c8 32%,#0284c7 62%,#0d9488 100%);}
-
-  /* META BAR */
-  .ph-meta{display:grid;grid-template-columns:repeat(4,1fr);background:#f0f4f8;border-bottom:1px solid #c8d4e0;}
-  .ph-mf{padding:11px 16px;border-right:1px solid #c8d4e0;}
-  .ph-mf:last-child{border-right:none;}
-  .ph-mk{font-size:7.5px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:#5a7290;margin-bottom:3px;}
-  .ph-mv{font-size:12.5px;font-weight:700;color:#0c1a2e;}
-
-  /* BODY */
-  .ph-body{padding:16px 24px;}
-
-  /* RISK BOX */
-  .ph-rbox{display:flex;align-items:center;gap:22px;padding:16px 22px;border-radius:12px;border:2.5px solid #16a34a;background:#f0fdf4;margin-bottom:18px;page-break-inside:avoid;}
-  .ph-rbox.mod{border-color:#d97706!important;background:#fffbeb!important;}
-  .ph-rbox.hi {border-color:#dc2626!important;background:#fef2f2!important;}
-  .ph-rpct{font-size:58px;font-weight:900;line-height:1;color:#16a34a;flex-shrink:0;letter-spacing:-.02em;}
-  .ph-rbox.mod .ph-rpct{color:#d97706;}
-  .ph-rbox.hi  .ph-rpct{color:#dc2626;}
-  .ph-rinfo{flex:1;}
-  .ph-rlvl{font-size:20px;font-weight:900;color:#0c1a2e;margin-bottom:5px;letter-spacing:-.01em;}
-  .ph-radv{font-size:11px;color:#364050;line-height:1.65;}
-
-  /* SECTION HEADERS */
-  .ph-sh{display:block;font-size:8.5px;font-weight:900;text-transform:uppercase;letter-spacing:.13em;color:#fff;background:linear-gradient(90deg,#091c38,#1846c8 60%,#1c5bc8);padding:6px 14px;border-radius:5px;margin:16px 0 10px;}
-
-  /* PARAMS GRID */
-  .ph-pg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px 18px;margin-bottom:14px;}
-  .ph-pi{padding:7px 0;border-bottom:1px solid #edf2f7;}
-  .ph-pk{font-size:7.5px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#5a7290;margin-bottom:2px;}
-  .ph-pv-row{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;}
-  .ph-pv{font-size:13px;font-weight:700;color:#0c1a2e;}
-  .ph-pv.na{color:#94a3b8;font-weight:400;}
-  .ph-pnorm{font-size:8px;color:#5a7290;background:#edf2f7;padding:1px 6px;border-radius:3px;border:1px solid #d4dde6;white-space:nowrap;}
-
-  /* CLINICAL HISTORY */
-  .ph-hg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px;}
-  .ph-hi{display:flex;align-items:center;gap:8px;padding:8px 11px;border-radius:7px;background:#f8fafc;border:1px solid #e2e8f0;}
-  .ph-hc{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;flex-shrink:0;}
-  .ph-hc.y{background:#16a34a;color:#fff;}
-  .ph-hc.n{background:#e0e8f0;color:#94a3b8;}
-  .ph-hl{font-size:9.5px;font-weight:600;color:#364050;}
-
-  /* NORMAL REFERENCE TABLE */
-  .ph-nref{margin-bottom:14px;}
-  .ph-nr-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
-  .ph-nri{display:grid;grid-template-columns:86px 1fr auto;align-items:center;gap:8px;padding:6px 11px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;}
-  .ph-nk{font-size:7.5px;font-weight:900;color:#091c38;text-transform:uppercase;letter-spacing:.05em;}
-  .ph-nv{font-size:11.5px;font-weight:700;color:#1a3860;}
-  .ph-nc{font-size:7.5px;color:#5a7290;text-align:right;}
-
-  /* FLAGS */
-  .ph-fl{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
-  .ph-fi{display:flex;align-items:center;gap:9px;padding:7px 12px;border-radius:6px;font-size:10.5px;font-weight:500;line-height:1.35;}
-  .ph-fi.ok{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;}
-  .ph-fi.wn{background:#fffbeb;color:#b45309;border:1px solid #fde68a;}
-  .ph-fi.bd{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;}
-  .ph-fi.nf{background:#f8fafc;color:#475569;border:1px solid #e2e8f0;}
-
-  /* FOOTER */
-  .ph-foot{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 24px;background:linear-gradient(90deg,#f0f4f8,#f8fafc);border-top:1px solid #c8d4e0;font-size:8px;color:#5a7290;gap:16px;line-height:1.75;}
-  .ph-foot strong{color:#2a3e54;}
-  .ph-sig{font-size:8px;color:#94a3b8;text-align:right;flex-shrink:0;white-space:nowrap;}
-}
-
 /* ══════════════════════════════════════
-   RESPONSIVE — MOBILE
+   RESPONSIVE — ADAPTIVE LAYOUT
 ══════════════════════════════════════ */
 /* ── DESKTOP WIDE ── */
 @media(min-width:1024px){
-  .page{max-width:1160px;padding:0 40px calc(80px + 0px);}
+  .page{max-width:1160px;padding:0 40px calc(80px);}
   .grid{grid-template-columns:1fr 380px;gap:24px;}
   h1{font-size:72px;}
   .hero{padding:88px 0 60px;}
 }
 @media(min-width:768px) and (max-width:1023px){
-  .page{max-width:900px;padding:0 28px calc(80px + 0px);}
+  .page{max-width:900px;padding:0 28px calc(80px);}
   .grid{grid-template-columns:1fr 320px;gap:18px;}
 }
-/* ── TABLET (portrait) — stack result below form ── */
+/* ── TABLET portrait — stack result above form ── */
 @media(max-width:767px){
   .grid{grid-template-columns:1fr;}
   .sticky{position:static;}
   .res-card{margin-top:0;}
-  /* On mobile the result card goes ABOVE the form */
   .grid > div:last-child{order:-1;}
   .info-row{grid-template-columns:1fr 1fr;}
   .row{grid-template-columns:1fr 1fr;}
 }
 /* ── MOBILE ── */
 @media(max-width:540px){
-  .page{padding:0 14px calc(60px + 0px);}
+  .page{padding:0 14px calc(60px);}
   .patient-bar{flex-wrap:wrap;gap:8px;}
   .p-input{min-width:100%;order:-1;}
   .btn-save,.btn-new,.btn-print{flex:1;justify-content:center;}
@@ -856,6 +799,7 @@ input[type=number]::placeholder{color:rgba(255,255,255,.18);}
   .ptab{display:none;}
   .about p:last-of-type{display:none;}
 }
+
 /* ══ CUSTOM MODALS — replaces alert/confirm/prompt for WKWebView ══ */
 .modal-overlay{
   display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;
@@ -1157,13 +1101,15 @@ input[type=number]::placeholder{color:rgba(255,255,255,.18);}
   </div><!-- /page -->
 
   <div class="sig-footer">
-    <div class="sig-line">
+    <a class="sig-line sig-link" href="mailto:gdddevelopers.dev@gmail.com" title="Contact GDD">
       <span class="sig-mono">GDD</span>
       <span class="sig-div"></span>
       <span class="sig-role">Owner &amp; Full-Stack Developer</span>
       <span class="sig-div"></span>
       <span class="sig-year">© 2026</span>
-    </div>
+      <span class="sig-div"></span>
+      <span class="sig-email">✉ gdddevelopers.dev@gmail.com</span>
+    </a>
   </div>
 </div><!-- /app -->
 
@@ -1483,16 +1429,18 @@ function _doPrintWithName(printerName, r) {
         '<div class="ph-docid">Doc No: ' + docNum + '</div>' +
       '</div>' +
     '</div>' +
-    '<div class="ph-metastrip">' +
-      '<div class="ph-mf"><div class="ph-mk">Patient Name / ID</div><div class="ph-mv">' + pat + '</div></div>' +
-      '<div class="ph-mf"><div class="ph-mk">Date Generated</div><div class="ph-mv">' + dstr + '</div></div>' +
-      '<div class="ph-mf"><div class="ph-mk">Time</div><div class="ph-mv">' + tstr + '</div></div>' +
-      '<div class="ph-mf"><div class="ph-mk">Requested By</div><div class="ph-mv">' + (printerName.trim() || '—') + '</div></div>' +
-    '</div>' +
   '</div>' +
 
   /* ── STRIPE ── */
   '<div class="ph-stripe"></div>' +
+
+  /* ── META STRIP ── */
+  '<div class="ph-metastrip">' +
+    '<div class="ph-mf"><div class="ph-mk">Patient Name / ID</div><div class="ph-mv">' + pat + '</div></div>' +
+    '<div class="ph-mf"><div class="ph-mk">Date Generated</div><div class="ph-mv">' + dstr + '</div></div>' +
+    '<div class="ph-mf"><div class="ph-mk">Time</div><div class="ph-mv">' + tstr + '</div></div>' +
+    '<div class="ph-mf"><div class="ph-mk">Requested By</div><div class="ph-mv">' + (printerName.trim() || '—') + '</div></div>' +
+  '</div>' +
 
   '<div class="ph-body">' +
 
