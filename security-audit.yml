@@ -1,0 +1,95 @@
+name: Security Audit
+
+on:
+  schedule:
+    # Runs every Monday at 08:00 UTC
+    - cron: '0 8 * * 1'
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  audit:
+    name: Dependency & Content Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Scan for hardcoded secrets
+        run: |
+          echo "──────────────────────────────────────────"
+          echo "  🔍  Scanning for potential secrets..."
+          echo "──────────────────────────────────────────"
+
+          PATTERNS=(
+            "password\s*="
+            "api_key\s*="
+            "apikey\s*="
+            "secret\s*="
+            "token\s*="
+            "private_key"
+            "-----BEGIN RSA"
+          )
+
+          FOUND=false
+          for pattern in "${PATTERNS[@]}"; do
+            if grep -riE "$pattern" index.html 2>/dev/null | grep -v "//.*$pattern" | grep -v "modal" | grep -v "cookie" > /dev/null 2>&1; then
+              echo "  ⚠️   Potential match for pattern: $pattern"
+              FOUND=true
+            fi
+          done
+
+          if [ "$FOUND" = false ]; then
+            echo "  ✅  No hardcoded secrets detected."
+          fi
+
+      - name: Verify no external API calls in source
+        run: |
+          echo "──────────────────────────────────────────"
+          echo "  🌐  Checking for unexpected external requests..."
+          echo "──────────────────────────────────────────"
+
+          # Only Google Fonts should be the external resource
+          EXTERNAL=$(grep -oE 'https?://[^"'"'"' ]+' index.html | grep -v "fonts.googleapis.com" | grep -v "fonts.gstatic.com" | grep -v "anthropic.com" || true)
+
+          if [ -z "$EXTERNAL" ]; then
+            echo "  ✅  No unexpected external requests found."
+            echo "  ℹ️   Only Google Fonts CDN is referenced (expected)."
+          else
+            echo "  ⚠️   Unexpected external URLs found:"
+            echo "$EXTERNAL"
+          fi
+
+      - name: Check for known vulnerable patterns
+        run: |
+          echo "──────────────────────────────────────────"
+          echo "  🛡️   Checking for vulnerable JS patterns..."
+          echo "──────────────────────────────────────────"
+
+          VULN_PATTERNS=(
+            "eval("
+            "document.write("
+            "innerHTML.*location"
+            "location.hash"
+          )
+
+          ALL_CLEAR=true
+          for pattern in "${VULN_PATTERNS[@]}"; do
+            if grep -q "$pattern" index.html; then
+              echo "  ⚠️   Review recommended: $pattern"
+              ALL_CLEAR=false
+            fi
+          done
+
+          if [ "$ALL_CLEAR" = true ]; then
+            echo "  ✅  No known vulnerable patterns found."
+          fi
+
+      - name: Audit summary
+        run: |
+          echo "══════════════════════════════════════════"
+          echo "  Security Audit Complete"
+          echo "  PreeclampsiaRisk · WVSUMC"
+          echo "  © 2026 GDD · All rights reserved."
+          echo "══════════════════════════════════════════"

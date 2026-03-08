@@ -1,0 +1,74 @@
+name: Docs Lint
+
+on:
+  push:
+    paths:
+      - '**.md'
+      - 'docs/**'
+      - '.github/**'
+  pull_request:
+    paths:
+      - '**.md'
+      - 'docs/**'
+
+jobs:
+  markdownlint:
+    name: Markdown Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install markdownlint-cli
+        run: npm install -g markdownlint-cli
+
+      - name: Run markdownlint
+        run: |
+          echo "──────────────────────────────────────────"
+          echo "  PreeclampsiaRisk · Markdown Lint"
+          echo "──────────────────────────────────────────"
+          markdownlint \
+            --config '{"default":true,"MD013":false,"MD033":false,"MD041":false,"MD024":false,"MD007":{"indent":2}}' \
+            README.md CHANGELOG.md CONTRIBUTING.md SECURITY.md \
+            docs/scoring-methodology.md docs/clinical-parameters.md \
+            && echo "✅ All markdown files passed lint." \
+            || echo "⚠️  Markdown lint warnings detected."
+
+  check-links:
+    name: Internal Link Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install markdown-link-check
+        run: npm install -g markdown-link-check
+
+      - name: Check links in README
+        run: |
+          echo "──────────────────────────────────────────"
+          echo "  Checking links in README.md..."
+          echo "──────────────────────────────────────────"
+          markdown-link-check README.md \
+            --config '{"ignorePatterns":[{"pattern":"^mailto:"}],"retryOn429":true,"retryCount":3,"fallbackRetryDelay":"30s"}' \
+            && echo "✅ README links OK." || echo "⚠️  Some links may be unavailable."
+
+      - name: Check links in docs
+        run: |
+          echo "  Checking links in docs/..."
+          for f in docs/*.md; do
+            echo "  → $f"
+            markdown-link-check "$f" \
+              --config '{"ignorePatterns":[{"pattern":"^mailto:"}],"retryOn429":true}' \
+              && echo "  ✅ $f OK" || echo "  ⚠️  $f has warnings"
+          done

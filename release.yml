@@ -1,0 +1,80 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "version=${TAG#v}" >> $GITHUB_OUTPUT
+          echo "  📦  Releasing version: $TAG"
+
+      - name: Extract changelog entry
+        id: changelog
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          echo "  📋  Extracting changelog for v$VERSION..."
+
+          # Extract the section for this version from CHANGELOG.md
+          NOTES=$(awk "/^## \[$VERSION\]/{found=1; next} found && /^## \[/{exit} found{print}" CHANGELOG.md)
+
+          if [ -z "$NOTES" ]; then
+            NOTES="See CHANGELOG.md for full release notes."
+          fi
+
+          # Write to file to handle multiline
+          echo "$NOTES" > release_notes.txt
+          echo "  ✅  Changelog extracted."
+
+      - name: Build release archive
+        run: |
+          echo "  🗜️   Building release archive..."
+          zip -r "preeclampsia-risk-${{ steps.version.outputs.tag }}.zip" \
+            index.html \
+            README.md \
+            LICENSE \
+            CHANGELOG.md \
+            docs/ \
+            --exclude "*.DS_Store" \
+            --exclude "*/.git/*"
+          echo "  ✅  Archive created: preeclampsia-risk-${{ steps.version.outputs.tag }}.zip"
+          ls -lh preeclampsia-risk-*.zip
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "PreeclampsiaRisk ${{ steps.version.outputs.tag }}"
+          body_path: release_notes.txt
+          draft: false
+          prerelease: ${{ contains(steps.version.outputs.tag, '-rc') || contains(steps.version.outputs.tag, '-beta') }}
+          files: |
+            preeclampsia-risk-${{ steps.version.outputs.tag }}.zip
+          generate_release_notes: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release summary
+        run: |
+          echo "──────────────────────────────────────────────────"
+          echo "  ✅  Release ${{ steps.version.outputs.tag }} published."
+          echo "  📦  PreeclampsiaRisk · WVSUMC"
+          echo "  © 2026 GDD · Owner & Full-Stack Developer"
+          echo "──────────────────────────────────────────────────"
