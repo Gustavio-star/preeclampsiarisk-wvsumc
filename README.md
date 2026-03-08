@@ -192,7 +192,7 @@ No build step. No dependencies. No server required.
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/preeclampsia-risk.git
+git clone https://github.com/Gustavio-star/preeclampsiarisk-wvsumc.git
 
 # Open directly in any browser
 open index.html
